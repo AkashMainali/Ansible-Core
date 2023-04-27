@@ -2,6 +2,6 @@
 - hosts: all
   gather_facts: no
   tasks:
-   - name: Include task to provision windows machine
-     include_tasks: VSphere_create_windows_vm.yml
+      - name: Include task to provision windows machine
+        include_tasks: "VSphere_create_windows_vm.yml"
 
