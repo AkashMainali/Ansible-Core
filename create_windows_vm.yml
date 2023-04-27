@@ -1,5 +1,6 @@
 ---
-- tasks:
+- name: Provision windows machine
+  tasks:
    - name: Include role to create Windows VM
      include_role:
        name: create_win_vm
