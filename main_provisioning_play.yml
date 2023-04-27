@@ -2,9 +2,51 @@
 - hosts: local_inventory
   gather_facts: false
   tasks:
-    - name: Include task to provision windows machine
-      include_tasks: create_windows_vm.yml
+    - name: Include role to create Windows VM
+      include_role:
+        name: create_win_vm
 
-    - name: Include task to configure DNS server
-      include_tasks: configure_dns_server.yml
+- hosts: dns_server
+  gather_facts: no
+  tasks:
 
+    - name: debug variables from previous template
+      debug:
+        msg: "{{ windows_hostname }}"
+        
+    - name: debug variables from previous template
+      debug:
+        msg: "{{ windows_ip_address }}"
+
+    - name: Configure the DNS server
+      include_role:
+        name: configure_dns_server
+
+- hosts: local_inventory
+  gather_facts: no
+  vars:
+    ansible_win_user: "{{ username }}"
+    ansible_win_password: "{{ password }}"
+  tasks:
+    - name: Create in memory inventory with created VM
+      add_host:
+        name: "{{ windows_hostname }}"
+        groups: windows_server
+        ansible_user: '{{ ansible_win_user }}'
+        ansible_pass: '{{ ansible_win_password }}'
+        ansible_hostname: "{{ windows_hostname }}"
+        ansible_port: 5985
+        ansible_connection: winrm
+        ansible_winrm_transport: 'ntlm'
+        ansible_winrm_server_cert_validation: ignore
+      no_log: true
+
+- hosts: windows_server
+  gather_facts: no
+  tasks:
+    - name: Ping the Machine
+      win_ping: 
+    
+    - name: Install Windows Services and provision a Web Server
+      include_role:
+        name: install_windows_service
