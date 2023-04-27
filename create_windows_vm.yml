@@ -2,6 +2,6 @@
 - hosts: local_inventory
   gather_facts: no
   tasks:
-   - name: Include role to create Windows VM
-     include_role:
-       name: create_win_vm
+    - name: Include role to create Windows VM
+      include_role:
+        name: create_win_vm
