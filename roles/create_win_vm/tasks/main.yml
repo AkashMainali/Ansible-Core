@@ -46,9 +46,9 @@
   poll: 10
   async: 9000
 
-- name: Pause for 1 minutes
-  ansible.builtin.pause:
-    minutes: 1
+# - name: Pause for 1 minutes
+#   ansible.builtin.pause:
+#     minutes: 1
 
 - name: Gather one specific VM
   community.vmware.vmware_guest_info:
