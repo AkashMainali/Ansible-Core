@@ -1,7 +1,9 @@
 ---
 - hosts: local
-  gather_facts: no
-  tasks:
-   - name: Include role to create Windows VM
-     include_role:
-       name: create_win_vm
+  gather_facts: 
+  roles:
+    role: create_win_vm
+  # tasks:
+  #  - name: Include role to create Windows VM
+  #    include_role:
+  #      name: create_win_vm
