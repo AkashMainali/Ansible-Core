@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: local
   gather_facts: no
   tasks:
    - name: Include role to create Windows VM
