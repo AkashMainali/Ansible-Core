@@ -3,8 +3,8 @@
   become_user: yes
   gather_facts: no
   vars:
-    ansible_win_user: "{{ username }}"
-    ansible_win_password: "{{ password }}"
+    ansible_win_user: "{{ win_username }}"
+    ansible_win_password: "{{ win_password }}"
   tasks:
     - name: Create in memory inventory with created VM
       add_host:
