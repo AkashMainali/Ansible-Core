@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: local_inventory
   gather_facts: no
   vars:
     ansible_win_user: "{{ username }}"
