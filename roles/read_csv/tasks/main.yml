@@ -1,0 +1,16 @@
+---
+# tasks file for read_csv
+- name: Debug playbook directory
+  debug:
+    msg: "{{ playbook_dir }}"
+
+- name: Read users from CSV file and return a list
+  read_csv:
+    path: "{{ playbook_dir }}/roles/read_csv/files/share_directory_details.csv"
+    fieldnames: name,path,comment
+    delimiter: ','
+  register: share_directory_details
+
+- name: debug the csv output
+  debug:
+    var: share_directory_details

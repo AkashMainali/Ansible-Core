@@ -1,0 +1,25 @@
+---
+- name: Install IIS Web-Server with sub features and management tools
+  ansible.windows.win_feature:
+    name: Web-Server
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: win_feature
+
+- name: Include task to Launch the website
+  include_tasks: deploy_website.yml
+
+- name: Reboot if installing Web-Server feature requires it
+  ansible.windows.win_reboot:
+  when: win_feature.reboot_required
+
+# One way to ensure the system is reliable, is to set WinRM to a delayed startup
+- name: Ensure WinRM starts when the system has settled and is ready to work reliably
+  win_service:
+    name: WinRM
+    start_mode: delayed
+
+- name: Display final message
+  debug:
+    msg: "Windows Services have been installed"

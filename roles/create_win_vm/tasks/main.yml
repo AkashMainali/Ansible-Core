@@ -1,0 +1,75 @@
+---
+# tasks file for create_windows_vm
+- name: Select Windows 2016 template
+  set_fact:
+    windows_template: "windows2016_template"
+  when: vm_template == "Windows_2016"
+
+- name: Select Windows 2019 template
+  set_fact:
+    windows_template: "windows2019_template"
+  when: vm_template == "Windows_2019"
+
+- name: Provision Windows machine
+  community.vmware.vmware_guest:
+    hostname: "{{ vmware_hostname }}"
+    username: "{{ vmware_username }}"
+    password: "{{ vmware_password }}"
+    folder: "RHEL-Automation"
+    template: "{{ windows_template }}"
+    validate_certs: no
+    name: "{{ vm_name }}"
+    state: poweredon
+    cluster: "RHEL-Automation"
+    datastore: "Demo-Datastore01"
+    datacenter: "Plainview"
+    networks:
+      - name: "RHEL-Automation - vLAN 102"
+        type: dhcp
+        domain: "iisl.lab"
+        dns_servers:
+          - 192.168.2.201
+    customization:
+      hostname: '{{ vm_name }}'
+      dns_servers:
+        - 192.168.2.201
+      dns_suffix:
+        - "crucible.iisl.lab"
+        - "iisl.lab"
+      domain: 'iisl.lab'
+      runonce:
+            - powershell.exe -ExecutionPolicy Unrestricted -File C:\Windows\Temp\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert -EnableCredSSP
+    wait_for_ip_address: true
+    wait_for_customization: true
+  delegate_to: localhost
+  register: windows_vm
+  poll: 10
+  async: 9000
+
+- name: Pause for 1 minutes
+  ansible.builtin.pause:
+    minutes: 1
+
+- name: Gather one specific VM
+  community.vmware.vmware_guest_info:
+    hostname: "{{ vmware_hostname }}"
+    username: "{{ vmware_username }}"
+    password: "{{ vmware_password }}"
+    validate_certs: false
+    datacenter: "Plainview"
+    name: "{{ vm_name }}"
+  register: vm_info
+
+- name: debug ip address of vm created
+  set_fact:
+    windows_vm_ip: "{{ vm_info.instance.ipv4 }}"
+
+- name: Displaying success message
+  debug:
+    msg: "The VM Has been provisioned successfully"
+
+- name: Set stats for workflow template
+  set_stats:
+    data:
+      windows_ip_address: "{{ windows_vm_ip }}"
+      windows_hostname: "{{ vm_name }}.iisl.lab"

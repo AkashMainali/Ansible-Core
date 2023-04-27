@@ -1,0 +1,10 @@
+---
+# tasks file for create_directory_for_ad_user
+- name: Create directories for AD user
+  win_file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+   - 'C:\Users\{{ ad_firstname }}\Desktop\ansible'
+   - 'C:\Users\{{ ad_firstname }}\Desktop\ansible\collections'
+   - 'C:\Users\{{ ad_firstname }}\Desktop\ansible\roles'

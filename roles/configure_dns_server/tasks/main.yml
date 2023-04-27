@@ -1,0 +1,35 @@
+---
+# tasks file for configure_dns
+- name: Get the last octate of the ip address
+  set_fact:
+   ip_last_octate:  "{{windows_ip_address.split('.')[3] }}"
+
+- name: Get the First octate of the ip address
+  set_fact:
+   short_hostname: "{{windows_hostname.split('.')[0] }}"
+
+- name: Add server entry in forward DNS zone
+  lineinfile:
+    dest: /var/named/iisl.lab.zone
+    line: "{{ short_hostname }}   IN   A  {{ windows_ip_address }}"
+
+- name: Add server entry in reverse DNS zone
+  lineinfile:
+    dest: /var/named/reverse.2.168.192.zone
+    line: "{{ ip_last_octate }}  IN  PTR  {{ windows_hostname }}. "
+
+- name: Restart DNS serveice
+  ansible.builtin.service:
+   name: named
+   state: restarted
+
+- name: Display success message
+  debug:
+    msg: " The created VM has been added to the DNS server "
+
+
+- name: Set stats for workflow template
+  set_stats:
+    data:
+      windows_ip: "{{ windows_ip_address }}"
+      windows_hostname: "{{windows_hostname}}"

@@ -1,0 +1,10 @@
+name,path,comment
+External,EDIGateway\External,External Entity Share
+FTAData,EDIGateway\FTA,FTA Share
+FTAData,EDIGateway\FTA\FTAData,FTAData Share
+BTPickupB,EDIGateway\BizTalk\BTPickupB,BizTalk X12 Share
+CustomInterfaces,EDIGateway\CustomInterfaces,Custom Interfaces Share
+QNXTConnectShare,EDIGateway\BizTalk\QNXTConnectShare,BizTalk QNXTConnectShare Share
+Archive,EDIGateway\Archive,Archive Share
+EdifecsX12Share,EDIGateway\Edifecs\EdifecsX12Share,Edifecs XEngine Service X12 Share
+EdifecsConfigShare,EDIGateway\Edifecs\EdifecsConfigShare,Edifecs XEngine Config Share

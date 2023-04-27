@@ -1,0 +1,31 @@
+---
+# Start a website
+- name: Copy the website files and folders
+  win_copy:
+    src: romofyi-html
+    dest: C:\sites
+
+- name: Remove Default Web Site
+  community.windows.win_iis_website:
+    name: "Default Web Site"
+    state: absent
+    
+- name: Deploy a new IIS site
+  community.windows.win_iis_website:
+    name: romify
+    state: started
+    port: 80
+    hostname: "{{ windows_hostname }}"
+    physical_path: C:\sites\romofyi-html
+    parameters: logfile.directory:C:\sites\logs
+  register: website
+
+- name: Add Romify webapplication on IIS.
+  win_iis_webapplication:
+    name: romify
+    site: romify
+    state: present
+    physical_path: C:\sites\romofyi-html
+
+
+

@@ -1,0 +1,34 @@
+---
+# tasks file for install_choco_windows
+- name: Call task file to install chocolatey
+  include_tasks: install_chocolatey.yml
+
+# - name: Install package dependencies
+#   win_chocolatey:
+#     name:
+#       - chocolatey-core.extension
+#       - chocolatey-windowsupdate.extension
+#     state: latest
+
+- name: Install git and notepad++
+  win_chocolatey:
+    name:
+    - git.install
+    - notepadplusplus.install
+    force: yes
+    validate_certs: no
+    state: latest
+
+- name: Install VS Code and PowerShell Preview
+  win_chocolatey:
+    name:
+    - vscode.install
+    - powershell-preview
+    force: yes
+    validate_certs: no
+    state: latest
+
+# - name: Upgrade installed packages
+#   win_chocolatey:
+#     name: all
+#     state: latest
