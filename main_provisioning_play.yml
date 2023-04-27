@@ -1,11 +1,11 @@
 ---
-- hosts: local_inventory
+- hosts: dns_server
   gather_facts: false
   tasks:
     - name: Include role to create Windows VM
       include_role:
         name: create_win_vm
-    - name: Set stats for workflow template
+    - name: Set Fact for workflow template
       set_fact:
           windows_ip_address: "{{ windows_vm_ip }}"
           windows_hostname: "{{ vm_name }}.iisl.lab"
@@ -26,7 +26,7 @@
       include_role:
         name: configure_dns_server
 
-- hosts: local_inventory
+- hosts: dns_server
   gather_facts: no
   vars:
     ansible_win_user: "{{ username }}"
@@ -54,3 +54,7 @@
     - name: Install Windows Services and provision a Web Server
       include_role:
         name: install_windows_service
+
+    - name: Install Choco Pacakges
+      include_role:
+        name: install_choco_windows
