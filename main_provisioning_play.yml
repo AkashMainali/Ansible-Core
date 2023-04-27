@@ -1,6 +1,6 @@
 ---
 - hosts: local_inventory
-  gather_facts: no
+  gather_facts: false
   tasks:
     - name: Include task to provision windows machine
       include_tasks: create_windows_vm.yml
