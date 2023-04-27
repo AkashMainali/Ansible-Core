@@ -1,4 +1,5 @@
-- hosts: local
+---
+- hosts: localhost
   tasks:
    - name: Include role to create Windows VM
      include_role:
