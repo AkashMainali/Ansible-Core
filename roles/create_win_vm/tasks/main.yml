@@ -67,8 +67,3 @@
 - name: Displaying success message
   debug:
     msg: "The VM Has been provisioned successfully"
-
-- name: Set stats for workflow template
-  set_fact:
-      windows_ip_address: "{{ windows_vm_ip }}"
-      windows_hostname: "{{ vm_name }}.iisl.lab"
