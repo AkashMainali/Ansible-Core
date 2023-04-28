@@ -8,13 +8,3 @@ dns.iisl.lab      ansible_host=192.168.2.201
 ansible_user=root
 ansible_pass=redhat
 
-[windows_host]
-romify2.iisl.lab
-
-[windows_host:vars]
-ansible_user=''
-ansible_pass=''
-ansible_port=5985
-ansible_connection=winrm
-ansible_winrm_transport=ntlm
-ansible_winrm_server_cert_validation=ignore
