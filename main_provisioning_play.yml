@@ -58,6 +58,10 @@
 - hosts: windows_server
   gather_facts: yes
   tasks:
+    - name: Include var file
+      include_vars:
+        file: '/root/Ansible-Core/vm_host_detail.yml'
+        
     - name: Ping the Machine
       win_ping: 
     
