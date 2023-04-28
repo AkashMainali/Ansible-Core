@@ -1,4 +1,8 @@
 ---
+##########################################################
+############### Provisioning the VM ######################
+##########################################################
+
 - hosts: local_inventory
   gather_facts: false
   tasks:
@@ -11,6 +15,10 @@
         src: "/root/Ansible-Core/vm_host_detail.j2"
         dest: "/root/Ansible-Core/vm_host_detail.yml"
       delegate_to: localhost
+
+##########################################################
+############## Configuring DNS server ####################
+##########################################################
 
 - hosts: dns_server
   gather_facts: no
@@ -30,6 +38,11 @@
     - name: Configure the DNS server
       include_role:
         name: configure_dns_server
+
+##########################################################
+############### Deploying web server #####################
+############# Installing Choco Package ###################
+##########################################################
 
 - hosts: local_inventory
   gather_facts: no
