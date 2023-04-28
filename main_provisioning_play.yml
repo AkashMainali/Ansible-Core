@@ -48,7 +48,7 @@
         groups: windows_server
         ansible_user: '{{ ansible_win_user }}'
         ansible_pass: '{{ ansible_win_password }}'
-        ansible_hostname: "{{ windows_hostname }}"
+        ansible_hostname: "{{ windows_ip_address }}"
         ansible_port: 5985
         ansible_connection: winrm
         ansible_winrm_transport: 'ntlm'
