@@ -12,8 +12,8 @@
 
     - name: Creating a new file to save the ip address and hostname of the machine
       template:
-        src: "vm_host_detail.j2"
-        dest: "vm_host_detail.yml"
+        src: "/root/Ansible-Core/vm_host_detail.j2"
+        dest: "/root/Ansible-Core/vm_host_detail.yml"
       delegate_to: localhost
 
 - hosts: local_inventory
@@ -21,8 +21,8 @@
   tasks:
     - name: Include var file
       include_vars:
-        file: vm_host_detail.yml
-        
+        file: '/root/Ansible-Core/vm_host_detail.yml'
+
     - name: debug variables from previous play
       debug:
         msg: "{{ windows_hostname }}"
