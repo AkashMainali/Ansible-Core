@@ -57,7 +57,9 @@
 - hosts: windows_server
   gather_facts: no
   tasks:
-
+    - name: Ping the Machine
+      win_ping: 
+    
     - name: Install Windows Services and provision a Web Server
       include_role:
         name: install_windows_service
