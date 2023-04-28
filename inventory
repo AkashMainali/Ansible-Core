@@ -1,5 +1,5 @@
 [local_inventory]
-localhost         ansible_host=192.168.2.223
+localhost
 
 [dns_server]
 dns.iisl.lab      ansible_host=192.168.2.201

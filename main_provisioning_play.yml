@@ -1,5 +1,5 @@
 ---
-- hosts: dns_server
+- hosts: local_inventory
   gather_facts: false
   tasks:
     - name: Include role to create Windows VM
@@ -10,10 +10,19 @@
           windows_ip_address: "{{ windows_vm_ip }}"
           windows_hostname: "{{ vm_name }}.iisl.lab"
 
-- hosts: dns_server
+    - name: Creating a new file to save the ip address and hostname of the machine
+      template:
+        src: "vm_host_detail.j2"
+        dest: "vm_host_detail.yml"
+      delegate_to: localhost
+
+- hosts: local_inventory
   gather_facts: no
   tasks:
-
+    - name: Include var file
+      include_vars:
+        file: vm_host_detail.yml
+        
     - name: debug variables from previous play
       debug:
         msg: "{{ windows_hostname }}"
@@ -26,7 +35,7 @@
       include_role:
         name: configure_dns_server
 
-- hosts: dns_server
+- hosts: local_inventory
   gather_facts: no
   vars:
     ansible_win_user: "{{ username }}"
