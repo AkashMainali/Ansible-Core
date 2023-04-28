@@ -16,7 +16,7 @@
         dest: "/root/Ansible-Core/vm_host_detail.yml"
       delegate_to: localhost
 
-- hosts: local_inventory
+- hosts: dns_servers
   gather_facts: no
   tasks:
     - name: Include var file
