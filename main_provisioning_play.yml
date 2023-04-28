@@ -41,11 +41,11 @@
     - name: Include var file
       include_vars:
         file: '/root/Ansible-Core/vm_host_detail.yml'
-        
+
     - name: Create in memory inventory with created VM
       add_host:
-        name: "{{ windows_ip_address }}"
-        ansible_hostname: "{{ }}"
+        name: "{{ windows_hostname }}"
+        ansible_host: "{{ windows_ip_address }}"
         groups: windows_server
         ansible_user: '{{ ansible_win_user }}'
         ansible_pass: '{{ ansible_win_password }}'
